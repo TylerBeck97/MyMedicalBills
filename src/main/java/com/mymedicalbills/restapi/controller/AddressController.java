@@ -1,8 +1,8 @@
 package com.mymedicalbills.restapi.controller;
 
 import com.mymedicalbills.restapi.entity.Address;
-import com.mymedicalbills.restapi.exception.AddressNotFoundException;
 import com.mymedicalbills.restapi.repository.AddressRepository;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +24,7 @@ public class AddressController {
     @GetMapping("/addresses/{id}")
     public ResponseEntity<Address> getRecordById(@PathVariable long id) {
         return ResponseEntity.ok(addressRepository.findById(id)
-                .orElseThrow(() -> new AddressNotFoundException(id)));
+                .orElseThrow(ResourceNotFoundException::new));
     }
 
 
@@ -34,8 +34,8 @@ public class AddressController {
     }
 
     @PutMapping("/addresses/{id}")
-    Address updateRecord(@PathVariable long id, @RequestBody Address address) {
-        return addressRepository.findById(id)
+    ResponseEntity<Address> updateRecord(@PathVariable long id, @RequestBody Address address) {
+        var result = addressRepository.findById(id)
                 .map(address1 -> {
                     address1.setAddress(address.getAddress());
                     address1.setCity(address.getCity());
@@ -43,11 +43,13 @@ public class AddressController {
                     address1.setStateCd(address.getStateCd());
                     return addressRepository.save(address1);
                 })
-                .orElseGet(() -> addressRepository.save(address));
+                .orElseThrow(ResourceNotFoundException::new);
+        return ResponseEntity.ok(result);
     }
 
     @DeleteMapping("/addresses/{id}")
-    void deleteRecord(@PathVariable long id) {
+    ResponseEntity<String> deleteRecord(@PathVariable long id) {
         addressRepository.deleteById(id);
+        return ResponseEntity.ok("Deleted address with id " + id);
     }
 }
