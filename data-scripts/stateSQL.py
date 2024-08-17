@@ -3,7 +3,7 @@ import mysql.connector
 
 def main():
 	# Connect to the MySQL database
-	mydb = mysql.connector.connect(host="localhost", user="root", password="MyMedicalBills", database="mymedicalbillsdb")
+	mydb = mysql.connector.connect(host="localhost", user="root", password="password", database="mymedicalbillsdb")
 	mycursor = mydb.cursor()
 	
 	sql = "INSERT state VALUES (%s, %s)"
