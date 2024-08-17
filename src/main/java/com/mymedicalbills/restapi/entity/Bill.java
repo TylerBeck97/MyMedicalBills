@@ -1,4 +1,4 @@
-package com.mymedicalbills.restapi.entities;
+package com.mymedicalbills.restapi.entity;
 
 import jakarta.persistence.*;
 

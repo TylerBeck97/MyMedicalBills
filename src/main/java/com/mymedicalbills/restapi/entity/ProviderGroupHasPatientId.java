@@ -1,4 +1,4 @@
-package com.mymedicalbills.restapi.entities;
+package com.mymedicalbills.restapi.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Embeddable
 public class ProviderGroupHasPatientId implements Serializable {
-    private static final long serialVersionUID = -8654274896566831982L;
+    private static final long serialVersionUID = -587354402829539036L;
     @Column(name = "provider_group_id", nullable = false)
     private Long providerGroupId;
 

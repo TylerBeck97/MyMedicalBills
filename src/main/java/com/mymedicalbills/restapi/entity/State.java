@@ -1,11 +1,13 @@
-package com.mymedicalbills.restapi.entities;
+package com.mymedicalbills.restapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "state")
 public class State {
     @Id
@@ -14,6 +16,15 @@ public class State {
 
     @Column(name = "state_description", nullable = false, length = 64)
     private String stateDescription;
+
+    public State (String stateCd, String stateDescription) {
+        this.stateCd = stateCd;
+        this.stateDescription = stateDescription;
+    }
+
+    public State() {
+
+    }
 
     public String getStateCd() {
         return stateCd;

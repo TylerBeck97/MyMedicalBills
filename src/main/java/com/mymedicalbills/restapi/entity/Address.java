@@ -1,8 +1,10 @@
-package com.mymedicalbills.restapi.entities;
+package com.mymedicalbills.restapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "address")
 public class Address {
     @Id
@@ -18,6 +20,18 @@ public class Address {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "state_cd", nullable = false)
     private State stateCd;
+
+    @Column(name = "zip", length = 5)
+    private String zip;
+
+    public Address(long id, String address, String city, String zipcode, State state) {
+        this.id = id;
+        this.address = address;
+        this.city = city;
+        this.zip = zipcode;
+        this.stateCd = state;
+    }
+    public Address() {}
 
     public Long getId() {
         return id;
@@ -49,6 +63,14 @@ public class Address {
 
     public void setStateCd(State stateCd) {
         this.stateCd = stateCd;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
     }
 
 }
